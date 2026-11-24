@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaya Cuisine Restaurant | Cafe & Event Catering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        kaya: {
+                            dark: '#1C1613',      // Deep espresso/charcoal inspired by signage
+                            wood: '#2E231D',      // Warm dark wood slat tone
+                            amber: '#D97706',     // Rich amber gold highlight
+                            terracotta: '#C2410C',// Warm terracotta accent
+                            cream: '#FAF7F2',     // Clean warm cream canvas
+                            sand: '#F0EAE1',      // Subtle card background
+                            whatsapp: '#25D366',  // Authentic WhatsApp green
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom wood slat subtle texture for dark sections */
+        .wood-slat-bg {
+            background-color: #1C1613;
+            background-image: repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.02) 0px,
+                rgba(255, 255, 255, 0.02) 18px,
+                rgba(0, 0, 0, 0.25) 18px,
+                rgba(0, 0, 0, 0.25) 24px
+            );
+        }
+
+        /* Hide scrollbars cleanly for horizontal category pills on mobile */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes pulseSlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        .animate-pulse-slow {
+            animation: pulseSlow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-kaya-cream text-kaya-dark antialiased selection:bg-kaya-amber selection:text-white">
+
+    <!-- ==================== STICKY NAVBAR ==================== -->
+    <header class="sticky top-0 z-40 bg-kaya-dark/95 backdrop-blur-md border-b border-white/10 text-white transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+            <!-- Brand Logo (Palm Tree + Script/Serif Vibe) -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-kaya-amber to-kaya-terracotta flex items-center justify-center shadow-lg group-hover:rotate-3 transition-transform">
+                    <!-- Custom Palm SVG Icon -->
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 8c0-2.76-2.46-5-5.5-5S2 5.24 2 8h2l1-1 1 1h4"/>
+                        <path d="M13 7.14A5.82 5.82 0 0 1 16.5 6c3.04 0 5.5 2.24 5.5 5h-3l-1-1-1 1h-3"/>
+                        <path d="M5.89 9.71c-2.15 2.15-2.3 5.47-.35 7.43l4.24-4.25.7-.7.71-.71 2.12-2.12c-1.95-1.96-5.27-1.8-7.42.35z"/>
+                        <path d="M11 15.5c.5 2.5-.17 4.5-1 6.5h4c2-5.5-.5-12-1-14"/>
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-white block leading-none">Kaya Cuisine</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-kaya-amber font-medium block mt-0.5">Restaurant • Cafe • Catering</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-stone-300">
+                <a href="#menu" class="hover:text-kaya-amber transition-colors">Digital Menu</a>
+                <a href="#catering" class="hover:text-kaya-amber transition-colors">Event Catering</a>
+                <a href="#reviews" class="hover:text-kaya-amber transition-colors">Reviews</a>
+                <a href="#visit" class="hover:text-kaya-amber transition-colors">Hours & Location</a>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <!-- Cart Trigger Button -->
+                <button onclick="toggleCart()" aria-label="View Order Tray" class="relative p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span id="nav-cart-badge" class="hidden absolute -top-1.5 -right-1.5 bg-kaya-amber text-kaya-dark text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+
+                <!-- Direct WhatsApp CTA -->
+                <a href="https://wa.me/254700000000?text=Hello%20Kaya%20Cuisine!%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2 bg-kaya-whatsapp hover:bg-emerald-500 text-kaya-dark font-semibold text-xs sm:text-sm px-3.5 sm:px-4 py-2.5 rounded-xl shadow-md transition-all active:scale-95">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
+                    </svg>
+                    <span class="hidden sm:inline">Order on WhatsApp</span>
+                    <span class="sm:hidden">Order</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="wood-slat-bg text-white relative overflow-hidden">
+        <!-- Subtle warm ambient glow -->
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-kaya-amber/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 w-72 h-72 bg-kaya-terracotta/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 lg:py-24 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+                
+                <!-- Hero Text & CTAs -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <!-- Trust & Hours Pill -->
+                    <div class="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 bg-white/10 border border-white/15 backdrop-blur-sm px-3.5 py-1.5 rounded-full text-xs sm:text-sm">
+                        <span class="flex items-center gap-1 text-amber-400 font-semibold">
+                            <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            4.8 ★ Rating
+                        </span>
+                        <span class="text-white/30">•</span>
+                        <span class="text-stone-200">Meals Ksh 150 – 500</span>
+                        <span class="text-white/30">•</span>
+                        <span class="text-emerald-400 font-medium">Opens 7:00 AM</span>
+                    </div>
+
+                    <h1 class="font-serif text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight text-white">
+                        Fresh Flavors, Cozy Vibes &amp; <span class="text-kaya-amber italic">Reliable Event Catering</span>
+                    </h1>
+
+                    <p class="text-stone-300 text-base sm:text-lg max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Welcome to <strong class="text-white">Kaya Cuisine Restaurant</strong>—a quiet, welcoming neighborhood spot serving hearty Kenyan favorites, refreshing signature mocktails, and fresh cafe breakfasts from <span class="text-kaya-amber font-semibold">Ksh 150 to 500</span>.
+                    </p>
+
+                    <!-- Primary Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5 pt-2">
+                        <a href="#menu" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-kaya-amber hover:bg-amber-500 text-kaya-dark font-bold px-7 py-4 rounded-2xl shadow-lg shadow-amber-900/30 transition-all active:scale-95">
+                            <span>View Digital Menu</span>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </a>
+                        <a href="https://wa.me/254700000000?text=Hello%20Kaya%20Cuisine!%20I'd%20like%20to%20order%20from%20your%20menu." target="_blank" rel="noopener noreferrer"
+                           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold px-7 py-4 rounded-2xl transition-all active:scale-95">
+                            <svg class="w-5 h-5 text-kaya-whatsapp fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+                            <span>Order via WhatsApp</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Highlights Strip -->
+                    <div class="grid grid-cols-3 gap-3 pt-4 border-t border-white/10 max-w-lg mx-auto lg:mx-0 text-left">
+                        <div>
+                            <p class="text-kaya-amber font-bold text-lg sm:text-xl">7:00 AM</p>
+                            <p class="text-xs text-stone-400">Fresh Breakfast Daily</p>
+                        </div>
+                        <div>
+                            <p class="text-kaya-amber font-bold text-lg sm:text-xl">Ksh 150+</p>
+                            <p class="text-xs text-stone-400">Pocket-Friendly Plates</p>
+                        </div>
+                        <div>
+                            <p class="text-kaya-amber font-bold text-lg sm:text-xl">Catering</p>
+                            <p class="text-xs text-stone-400">Offices &amp; Events</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Showcase Card (Inspired by their Google Profile Photos) -->
+                <div class="lg:col-span-5">
+                    <div class="relative mx-auto max-w-md">
+                        <!-- Main Feature Dish Card -->
+                        <div class="bg-kaya-wood border border-white/15 rounded-3xl p-4 shadow-2xl">
+                            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-stone-800">
+                                <img src="https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&w=900&q=80"
+                                     onerror="this.src='https://placehold.co/800x600/2E231D/D97706?text=Crispy+Whole+Tilapia+%26+Fries'"
+                                     alt="Whole Fried Tilapia with Crispy Fries and Kachumbari"
+                                     class="w-full h-full object-cover">
+                                <div class="absolute top-3 left-3 bg-kaya-dark/85 backdrop-blur-md text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/10">
+                                    🔥 Customer Favorite
+                                </div>
+                                <div class="absolute bottom-3 right-3 bg-kaya-amber text-kaya-dark font-bold text-sm px-3.5 py-1.5 rounded-xl shadow-lg">
+                                    Ksh 450
+                                </div>
+                            </div>
+                            <div class="pt-4 px-1 flex items-center justify-between gap-3">
+                                <div>
+                                    <h3 class="font-serif font-bold text-lg text-white">Whole Fried Tilapia &amp; Fries</h3>
+                                    <p class="text-xs text-stone-300 mt-0.5">Served with fresh kachumbari &amp; choice of fries or ugali</p>
+                                </div>
+                                <button onclick="addToCart('tilapia-special')" class="shrink-0 bg-white/10 hover:bg-kaya-amber hover:text-kaya-dark text-white p-3 rounded-xl transition-colors" title="Add to Order">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Floating Drink Badge Card -->
+                        <div class="hidden sm:flex items-center gap-3 bg-white text-kaya-dark p-3 rounded-2xl shadow-xl border border-stone-200 absolute -bottom-5 -left-6 max-w-[240px]">
+                            <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=200&q=80"
+                                 onerror="this.src='https://placehold.co/150x150/0284C7/FFFFFF?text=Blue+Lagoon'"
+                                 alt="Blue Lagoon Mocktail"
+                                 class="w-12 h-12 rounded-xl object-cover shrink-0">
+                            <div>
+                                <p class="text-xs font-bold text-kaya-dark">Blue Lagoon Mocktail</p>
+                                <p class="text-[11px] text-stone-500">Chilled citrus refresher • <span class="font-semibold text-kaya-terracotta">Ksh 250</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INTERACTIVE DIGITAL MENU ==================== -->
+    <section id="menu" class="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <!-- Section Header -->
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold uppercase tracking-[0.2em] text-kaya-terracotta">Digital Menu</span>
+            <h2 class="font-serif text-3xl sm:text-4xl font-bold text-kaya-dark mt-2">Delicious Meals, Honest Prices</h2>
+            <p class="text-stone-600 text-sm sm:text-base mt-3">
+                Tap any dish to add it to your WhatsApp order tray, or order a single item directly in seconds.
+            </p>
+        </div>
+
+        <!-- Category Filter Tabs + Search -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+            <!-- Scrollable Pills on Mobile -->
+            <div id="category-tabs" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                <button onclick="filterMenu('All')" data-cat="All" class="cat-btn active shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-kaya-dark text-white shadow-sm transition-all">
+                    All Items
+                </button>
+                <button onclick="filterMenu('Main Dishes')" data-cat="Main Dishes" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-stone-700 hover:bg-kaya-sand border border-stone-200 transition-all">
+                    Main Dishes
+                </button>
+                <button onclick="filterMenu('Snacks & Sides')" data-cat="Snacks & Sides" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-stone-700 hover:bg-kaya-sand border border-stone-200 transition-all">
+                    Snacks &amp; Sides
+                </button>
+                <button onclick="filterMenu('Drinks & Mocktails')" data-cat="Drinks & Mocktails" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-stone-700 hover:bg-kaya-sand border border-stone-200 transition-all">
+                    Drinks &amp; Mocktails
+                </button>
+                <button onclick="filterMenu('Cafe & Breakfast')" data-cat="Cafe & Breakfast" class="cat-btn shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-stone-700 hover:bg-kaya-sand border border-stone-200 transition-all">
+                    Cafe &amp; Breakfast
+                </button>
+            </div>
+
+            <!-- Quick Search Input -->
+            <div class="relative w-full md:w-64 shrink-0">
+                <input type="text" id="menu-search" oninput="searchMenu(this.value)" placeholder="Search tilapia, chips, tea..."
+                       class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-stone-200 text-sm focus:outline-none focus:ring-2 focus:ring-kaya-amber">
+                <svg class="w-4 h-4 text-stone-400 absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Menu Items Grid -->
+        <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamically populated via JS -->
+        </div>
+
+        <!-- Empty Search Fallback -->
+        <div id="menu-empty" class="hidden text-center py-12 bg-white rounded-3xl border border-stone-200">
+            <p class="text-stone-500 font-medium">No menu items matched your search.</p>
+            <button onclick="resetMenuFilters()" class="mt-3 text-sm font-semibold text-kaya-terracotta underline">Show all dishes</button>
+        </div>
+    </section>
+
+    <!-- ==================== CATERING SERVICES & QUOTE BUILDER ==================== -->
+    <section id="catering" class="wood-slat-bg text-white py-16 sm:py-24 px-4 sm:px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                
+                <!-- Left Column: Catering Info -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-kaya-amber/20 border border-kaya-amber/40 text-kaya-amber px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                        Kaya Cuisine Cafe &amp; Catering
+                    </div>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                        Stress-Free Catering for Offices, Parties &amp; Special Events
+                    </h2>
+                    <p class="text-stone-300 text-base leading-relaxed">
+                        Planning a corporate team lunch, family celebration, chama meeting, or private event? Our catering team delivers generous, hot, flavorful Kenyan and continental platters right on schedule—tailored to your budget.
+                    </p>
+
+                    <!-- Catering Packages Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                            <div class="w-9 h-9 rounded-xl bg-kaya-amber/20 text-kaya-amber flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-white text-base">Office &amp; Corporate Lunches</h3>
+                            <p class="text-xs text-stone-300 mt-1 leading-relaxed">Individually packed lunch boxes or buffet setups for teams of 10 to 150+ guests.</p>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                            <div class="w-9 h-9 rounded-xl bg-kaya-amber/20 text-kaya-amber flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-white text-base">Parties &amp; Private Gatherings</h3>
+                            <p class="text-xs text-stone-300 mt-1 leading-relaxed">Birthdays, graduations, bridal showers &amp; family feasts with bitings, mains &amp; mocktails.</p>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                            <div class="w-9 h-9 rounded-xl bg-kaya-amber/20 text-kaya-amber flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-white text-base">Morning Tea &amp; Bitings</h3>
+                            <p class="text-xs text-stone-300 mt-1 leading-relaxed">Freshly brewed Kenyan masala tea, coffee, samosas, mandazi &amp; sausages for workshops.</p>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/10 rounded-2xl p-4">
+                            <div class="w-9 h-9 rounded-xl bg-kaya-amber/20 text-kaya-amber flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h3 class="font-bold text-white text-base">Flexible Budget Tiers</h3>
+                            <p class="text-xs text-stone-300 mt-1 leading-relaxed">Transparent per-plate pricing starting from Ksh 350/guest with reliable setup.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Instant WhatsApp Catering Quote Estimator -->
+                <div class="lg:col-span-6">
+                    <div class="bg-kaya-cream text-kaya-dark rounded-3xl p-6 sm:p-8 shadow-2xl border border-white/10">
+                        <h3 class="font-serif text-2xl font-bold text-kaya-dark">Instant Catering Quote Estimator</h3>
+                        <p class="text-sm text-stone-600 mt-1">Customize your event details below to get an instant estimate and send it straight to our catering manager on WhatsApp.</p>
+
+                        <form id="catering-form" onsubmit="sendCateringWhatsApp(event)" class="space-y-4 mt-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Your Name *</label>
+                                    <input type="text" id="cat-name" required placeholder="e.g. Grace Mwangi"
+                                           class="w-full px-4 py-3 rounded-xl bg-white border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-kaya-amber">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Event Type *</label>
+                                    <select id="cat-type" onchange="updateCateringEstimate()"
+                                            class="w-full px-4 py-3 rounded-xl bg-white border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-kaya-amber">
+                                        <option value="Office / Corporate Lunch">Office / Corporate Lunch</option>
+                                        <option value="Birthday / Family Party">Birthday / Family Party</option>
+                                        <option value="Meeting / Workshop Tea & Bitings">Meeting Tea &amp; Bitings</option>
+                                        <option value="Wedding / Graduation Event">Wedding / Graduation Event</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Event Date *</label>
+                                    <input type="date" id="cat-date" required
+                                           class="w-full px-4 py-3 rounded-xl bg-white border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-kaya-amber">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Number of Guests: <span id="guest-count-label" class="text-kaya-terracotta font-extrabold">25</span></label>
+                                    <input type="range" id="cat-guests" min="10" max="200" step="5" value="25" oninput="updateCateringEstimate()"
+                                           class="w-full accent-kaya-terracotta mt-2 cursor-pointer">
+                                    <div class="flex justify-between text-[11px] text-stone-500 mt-1">
+                                        <span>10 guests</span>
+                                        <span>100</span>
+                                        <span>200+</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Package Tier</label>
+                                <div class="grid grid-cols-3 gap-2.5">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="cat-tier" value="350" class="peer sr-only" onchange="updateCateringEstimate()">
+                                        <div class="p-3 rounded-xl bg-white border border-stone-300 peer-checked:border-kaya-terracotta peer-checked:bg-amber-50 text-center transition-all">
+                                            <p class="text-xs font-bold text-kaya-dark">Tea &amp; Snacks</p>
+                                            <p class="text-xs text-kaya-terracotta font-semibold mt-0.5">Ksh 350/pax</p>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="cat-tier" value="550" checked class="peer sr-only" onchange="updateCateringEstimate()">
+                                        <div class="p-3 rounded-xl bg-white border border-stone-300 peer-checked:border-kaya-terracotta peer-checked:bg-amber-50 text-center transition-all">
+                                            <p class="text-xs font-bold text-kaya-dark">Standard Feast</p>
+                                            <p class="text-xs text-kaya-terracotta font-semibold mt-0.5">Ksh 550/pax</p>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="cat-tier" value="850" class="peer sr-only" onchange="updateCateringEstimate()">
+                                        <div class="p-3 rounded-xl bg-white border border-stone-300 peer-checked:border-kaya-terracotta peer-checked:bg-amber-50 text-center transition-all">
+                                            <p class="text-xs font-bold text-kaya-dark">Executive Buffet</p>
+                                            <p class="text-xs text-kaya-terracotta font-semibold mt-0.5">Ksh 850/pax</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1.5">Location / Special Menu Requests</label>
+                                <input type="text" id="cat-notes" placeholder="e.g. Westlands office, include tilapia & fresh juice"
+                                       class="w-full px-4 py-3 rounded-xl bg-white border border-stone-300 text-sm focus:outline-none focus:ring-2 focus:ring-kaya-amber">
+                            </div>
+
+                            <!-- Live Estimated Total Box -->
+                            <div class="bg-kaya-sand rounded-2xl p-4 flex items-center justify-between border border-stone-200">
+                                <div>
+                                    <p class="text-xs text-stone-600 font-medium">Estimated Budget</p>
+                                    <p id="cat-estimate-total" class="text-xl sm:text-2xl font-extrabold text-kaya-dark">Ksh 13,750</p>
+                                </div>
+                                <span class="text-[11px] text-stone-500 max-w-[140px] text-right">Final quote customized to your menu choices</span>
+                            </div>
+
+                            <button type="submit" class="w-full inline-flex items-center justify-center gap-2 bg-kaya-whatsapp hover:bg-emerald-500 text-kaya-dark font-bold py-4 px-6 rounded-2xl shadow-lg transition-all active:scale-95">
+                                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+                                <span>Request Catering Quote on WhatsApp</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== REVIEWS & VIBE SECTION ==================== -->
+    <section id="reviews" class="py-16 sm:py-24 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-[0.2em] text-kaya-terracotta">Guest Love</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-kaya-dark mt-2">Rated 4.8 ★ by Our Diners</h2>
+                <p class="text-stone-600 text-sm sm:text-base mt-2 max-w-xl">
+                    Known locally as a <strong class="text-kaya-dark">quiet, relaxing spot with a wide variety of food options</strong> and warm hospitality.
+                </p>
+            </div>
+            <div class="inline-flex items-center gap-3 bg-white px-5 py-3.5 rounded-2xl border border-stone-200 shadow-sm">
+                <div class="text-3xl font-extrabold text-kaya-dark">4.8</div>
+                <div>
+                    <div class="flex text-amber-400 text-sm">★★★★★</div>
+                    <p class="text-xs text-stone-500">Verified Google Reviews</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Review 1 -->
+            <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 text-sm">★★★★★</span>
+                        <span class="text-xs text-stone-400">Google Review</span>
+                    </div>
+                    <p class="text-stone-700 text-sm leading-relaxed italic">
+                        "A quiet spot that offers a wide variety of food options at very fair prices. Their fried tilapia and crispy fries never disappoint!"
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-stone-100">
+                    <div class="w-9 h-9 rounded-full bg-kaya-sand text-kaya-terracotta font-bold text-xs flex items-center justify-center">DK</div>
+                    <div>
+                        <p class="text-xs font-bold text-kaya-dark">David K.</p>
+                        <p class="text-[11px] text-stone-500">Local Guide</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 2 -->
+            <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 text-sm">★★★★★</span>
+                        <span class="text-xs text-stone-400">Google Review</span>
+                    </div>
+                    <p class="text-stone-700 text-sm leading-relaxed italic">
+                        "Great service and super cozy outdoor bamboo &amp; wood ambiance. Perfect place to grab morning masala tea or a quick lunch."
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-stone-100">
+                    <div class="w-9 h-9 rounded-full bg-kaya-sand text-kaya-terracotta font-bold text-xs flex items-center justify-center">SN</div>
+                    <div>
+                        <p class="text-xs font-bold text-kaya-dark">Sarah N.</p>
+                        <p class="text-[11px] text-stone-500">Regular Diner</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 text-sm">★★★★★</span>
+                        <span class="text-xs text-stone-400">Catering Client</span>
+                    </div>
+                    <p class="text-stone-700 text-sm leading-relaxed italic">
+                        "We ordered lunch catering for 30 people at our office. Food arrived piping hot, generous portions, and everyone loved the mocktails."
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-stone-100">
+                    <div class="w-9 h-9 rounded-full bg-kaya-sand text-kaya-terracotta font-bold text-xs flex items-center justify-center">MO</div>
+                    <div>
+                        <p class="text-xs font-bold text-kaya-dark">Michael O.</p>
+                        <p class="text-[11px] text-stone-500">Event Organizer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== LOCATION & OPENING HOURS ==================== -->
+    <section id="visit" class="pb-20 px-4 sm:px-6 max-w-6xl mx-auto">
+        <div class="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12">
+            <!-- Info Side -->
+            <div class="lg:col-span-5 p-6 sm:p-10 flex flex-col justify-between space-y-6">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-kaya-terracotta">Visit Us</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl font-bold text-kaya-dark mt-2">Kaya Cuisine Restaurant</h2>
+                    <p class="text-sm text-stone-600 mt-2">Dine-in • Takeaway • Fast Delivery • Event Catering</p>
+
+                    <div class="space-y-4 mt-6">
+                        <!-- Hours -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-kaya-sand text-kaya-terracotta flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-kaya-dark">Opening Hours</p>
+                                <p class="text-sm text-stone-600">Monday – Sunday: <span class="font-semibold text-emerald-700">Opens 7:00 AM – 10:00 PM</span></p>
+                                <p class="text-xs text-stone-400 mt-0.5">Breakfast served from 7:00 AM sharp</p>
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-kaya-sand text-kaya-terracotta flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-kaya-dark">Find Us on Google Maps</p>
+                                <p class="text-sm text-stone-600">Look for the warm wooden slatted facade &amp; bamboo planters</p>
+                                <a href="https://maps.google.com/?q=Kaya+Cuisine+Restaurant" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-1 text-xs font-bold text-kaya-terracotta hover:underline mt-1">
+                                    Open Directions in Google Maps →
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Direct Contact -->
+                        <div class="flex items-start gap-3.5">
+                            <div class="w-10 h-10 rounded-xl bg-kaya-sand text-kaya-terracotta flex items-center justify-center shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-kaya-dark">Orders &amp; Catering Desk</p>
+                                <p class="text-sm text-stone-600">+254 700 000 000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex flex-col sm:flex-row gap-3">
+                    <a href="tel:+254700000000" class="flex-1 text-center py-3 px-4 rounded-xl border border-stone-300 font-semibold text-sm text-kaya-dark hover:bg-kaya-sand transition-colors">
+                        Call Restaurant
+                    </a>
+                    <a href="https://wa.me/254700000000?text=Hello%20Kaya%20Cuisine!%20Please%20share%20your%20exact%20pin%20location." target="_blank" rel="noopener noreferrer"
+                       class="flex-1 text-center py-3 px-4 rounded-xl bg-kaya-dark text-white font-semibold text-sm hover:bg-kaya-wood transition-colors">
+                        Ask for Pin on WhatsApp
+                    </a>
+                </div>
+            </div>
+
+            <!-- Interactive Map Visual Card -->
+            <div class="lg:col-span-7 bg-kaya-sand min-h-[280px] sm:min-h-[360px] relative flex items-center justify-center p-6">
+                <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#2E231D 1px, transparent 1px); background-size: 20px 20px;"></div>
+                <div class="relative z-10 bg-white/95 backdrop-blur-md p-6 rounded-3xl shadow-xl border border-stone-200 max-w-sm text-center">
+                    <div class="w-14 h-14 rounded-2xl bg-kaya-amber text-kaya-dark flex items-center justify-center mx-auto mb-3 shadow-md">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg text-kaya-dark">Kaya Cuisine Restaurant</h3>
+                    <p class="text-xs text-stone-500 mt-1">4.8 ★ (13+ Reviews) • Restaurant • Ksh 1–500</p>
+                    <a href="https://maps.google.com/?q=Kaya+Cuisine+Restaurant" target="_blank" rel="noopener noreferrer"
+                       class="mt-4 inline-flex items-center justify-center gap-2 w-full bg-kaya-amber hover:bg-amber-500 text-kaya-dark font-bold text-xs py-3 px-4 rounded-xl transition-all">
+                        Launch Google Maps Navigation
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-kaya-dark text-stone-400 border-t border-white/10 py-10 px-4 sm:px-6">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div>
+                <span class="font-serif text-lg font-bold text-white">Kaya Cuisine Restaurant</span>
+                <p class="text-xs text-stone-400 mt-1">Cuisine • Cafe • Event Catering • Opens 7:00 AM Daily</p>
+            </div>
+            <div class="flex items-center gap-6 text-xs">
+                <a href="#menu" class="hover:text-white transition-colors">Menu</a>
+                <a href="#catering" class="hover:text-white transition-colors">Catering</a>
+                <a href="#reviews" class="hover:text-white transition-colors">Reviews</a>
+                <a href="#visit" class="hover:text-white transition-colors">Contact</a>
+            </div>
+            <p class="text-xs text-stone-500">© <span id="year"></span> Kaya Cuisine. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== FLOATING CART PILL (MOBILE & DESKTOP) ==================== -->
+    <button id="floating-cart-btn" onclick="toggleCart()"
+            class="hidden fixed bottom-5 right-5 z-40 bg-kaya-dark text-white border border-kaya-amber/40 shadow-2xl px-5 py-3.5 rounded-2xl flex items-center gap-3 hover:scale-105 transition-all">
+        <div class="relative">
+            <svg class="w-5 h-5 text-kaya-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <span id="float-cart-count" class="absolute -top-2 -right-2 bg-kaya-amber text-kaya-dark text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+        </div>
+        <div class="text-left">
+            <p class="text-[10px] uppercase tracking-wider text-stone-400 leading-none">Your Tray</p>
+            <p id="float-cart-total" class="text-sm font-bold text-white mt-0.5">Ksh 0</p>
+        </div>
+    </button>
+
+    <!-- ==================== SLIDE-OVER WHATSAPP ORDER CART DRAWER ==================== -->
+    <div id="cart-backdrop" onclick="toggleCart()" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden transition-opacity"></div>
+    <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-kaya-cream text-kaya-dark z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Drawer Header -->
+        <div class="p-5 bg-kaya-dark text-white flex items-center justify-between">
+            <div>
+                <h3 class="font-serif text-xl font-bold">Your WhatsApp Order</h3>
+                <p class="text-xs text-stone-300">Review items and send directly to our kitchen</p>
+            </div>
+            <button onclick="toggleCart()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Cart Items List -->
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3">
+            <!-- Populated dynamically -->
+        </div>
+
+        <!-- Drawer Footer / Checkout -->
+        <div class="p-5 bg-white border-t border-stone-200 space-y-4">
+            <div class="space-y-2">
+                <label class="block text-xs font-bold uppercase tracking-wider text-stone-500">Order Mode &amp; Note</label>
+                <div class="grid grid-cols-2 gap-2">
+                    <select id="order-mode" class="px-3 py-2.5 rounded-xl bg-kaya-cream border border-stone-300 text-xs font-semibold">
+                        <option value="Dine-In / Table">Dine-In</option>
+                        <option value="Takeaway / Pick-up">Takeaway Pick-up</option>
+                        <option value="Local Delivery">Local Delivery</option>
+                    </select>
+                    <input type="text" id="order-note" placeholder="Extra instructions..." class="px-3 py-2.5 rounded-xl bg-kaya-cream border border-stone-300 text-xs">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-stone-100">
+                <span class="text-sm font-medium text-stone-600">Estimated Total</span>
+                <span id="drawer-cart-total" class="text-2xl font-extrabold text-kaya-dark">Ksh 0</span>
+            </div>
+
+            <button id="checkout-wa-btn" onclick="checkoutCartWhatsApp()"
+                    class="w-full inline-flex items-center justify-center gap-2 bg-kaya-whatsapp hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-kaya-dark font-bold py-4 px-6 rounded-2xl shadow-lg transition-all">
+                <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/></svg>
+                <span>Send Order via WhatsApp</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ==================== TOAST NOTIFICATION ==================== -->
+    <div id="toast" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 bg-kaya-dark text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-full shadow-xl border border-white/15 opacity-0 pointer-events-none transition-opacity duration-300">
+        Added to your WhatsApp tray!
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // Replace with Kaya Cuisine's actual WhatsApp number (format: 2547XXXXXXXX)
+        const WHATSAPP_NUMBER = "254700000000";
+
+        // Realistic Kenyan Menu Data tailored to Kaya Cuisine's Ksh 150 - 500 positioning
+        const menuItems = [
+            {
+                id: "tilapia-special",
+                name: "Whole Fried Tilapia & Ugali/Fries",
+                category: "Main Dishes",
+                price: 450,
+                badge: "House Signature",
+                desc: "Crispy golden whole lake tilapia served with fresh kachumbari, lemon wedge, and your choice of fries or hot ugali.",
+                img: "https://images.unsplash.com/photo-1580476262798-bddd9f4b7369?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Fried+Tilapia+%26+Fries"
+            },
+            {
+                id: "chicken-stirfry",
+                name: "Chicken Stir-Fry & Steamed Rice",
+                category: "Main Dishes",
+                price: 380,
+                badge: "Popular",
+                desc: "Tender boneless chicken strips tossed with bell peppers, carrots, and savory Kaya soy-ginger glaze over fluffy rice.",
+                img: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Chicken+Stir-Fry"
+            },
+            {
+                id: "beef-wetfry",
+                name: "Kaya Beef Wet-Fry & Chapati/Ugali",
+                category: "Main Dishes",
+                price: 350,
+                badge: "",
+                desc: "Slow-simmered prime beef cubes in rich tomato-coriander gravy, served with seasonal greens and 2 soft chapatis or ugali.",
+                img: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Beef+Wet-Fry"
+            },
+            {
+                id: "masala-chips",
+                name: "Loaded Masala Chips",
+                category: "Snacks & Sides",
+                price: 200,
+                badge: "Best Value",
+                desc: "Crispy hand-cut potato fries coated in tangy aromatic masala sauce, fresh dhania, and a hint of chili.",
+                img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Loaded+Masala+Chips"
+            },
+            {
+                id: "samosa-platter",
+                name: "Beef Samosas (Pair) & Kachumbari",
+                category: "Snacks & Sides",
+                price: 150,
+                badge: "",
+                desc: "Two crunchy, generously spiced minced-beef samosas served hot with fresh tomato-onion salsa.",
+                img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Crispy+Beef+Samosas"
+            },
+            {
+                id: "blue-lagoon",
+                name: "Blue Lagoon Signature Mocktail",
+                category: "Drinks & Mocktails",
+                price: 250,
+                badge: "Instagram Favorite",
+                desc: "Refreshing chilled citrus & blue curacao mocktail over crushed ice, garnished with a fresh lime wheel.",
+                img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/0284C7/FFFFFF?text=Blue+Lagoon+Mocktail"
+            },
+            {
+                id: "passion-mint",
+                name: "Fresh Passion & Mint Cooler",
+                category: "Drinks & Mocktails",
+                price: 200,
+                badge: "",
+                desc: "Locally sourced sweet passion fruit blended with garden mint leaves and chilled sparkling water.",
+                img: "https://images.unsplash.com/photo-1536935338788-846bb9981813?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/D97706/FFFFFF?text=Passion+Mint+Cooler"
+            },
+            {
+                id: "masala-tea-mandazi",
+                name: "Kenyan Masala Tea & 2 Mandazis",
+                category: "Cafe & Breakfast",
+                price: 150,
+                badge: "Morning Special",
+                desc: "Rich, creamy Kenyan chai infused with ginger and cardamom, paired with two warm fluffy coconut mandazis.",
+                img: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Masala+Tea+%26+Mandazi"
+            },
+            {
+                id: "kaya-breakfast",
+                name: "Kaya Cafe Sunrise Breakfast",
+                category: "Cafe & Breakfast",
+                price: 350,
+                badge: "7 AM – 11 AM",
+                desc: "Two farm eggs your way, 2 beef sausages, toasted bread, grilled tomato, and a cup of Kenyan coffee or tea.",
+                img: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=700&q=80",
+                fallback: "https://placehold.co/600x400/2E231D/D97706?text=Kaya+Sunrise+Breakfast"
+            }
+        ];
+
+        let currentCategory = "All";
+        let searchQuery = "";
+        let cart = [];
+
+        // Initialize Page
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("year").textContent = new Date().getFullYear();
+            
+            // Set default date for catering form to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById("cat-date").value = tomorrow.toISOString().split("T")[0];
+
+            renderMenu();
+            updateCartUI();
+        });
+
+        // Render Digital Menu Cards
+        function renderMenu() {
+            const grid = document.getElementById("menu-grid");
+            const emptyState = document.getElementById("menu-empty");
+
+            const filtered = menuItems.filter(item => {
+                const matchesCat = currentCategory === "All" || item.category === currentCategory;
+                const matchesSearch = item.name.toLowerCase().includes(searchQuery) ||
+                                      item.desc.toLowerCase().includes(searchQuery) ||
+                                      item.category.toLowerCase().includes(searchQuery);
+                return matchesCat && matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            grid.innerHTML = filtered.map(item => {
+                const singleWaMsg = encodeURIComponent(`Hello Kaya Cuisine! I'd like to order: 1x ${item.name} (Ksh ${item.price}).`);
+                return `
+                <article class="bg-white rounded-3xl border border-stone-200/90 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="relative aspect-[16/10] bg-stone-100 overflow-hidden">
+                            <img src="${item.img}" onerror="this.src='${item.fallback}'" alt="${item.name}"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            ${item.badge ? `<span class="absolute top-3 left-3 bg-kaya-dark/85 backdrop-blur-xs text-white text-[11px] font-semibold px-3 py-1 rounded-full">${item.badge}</span>` : ""}
+                            <span class="absolute bottom-3 right-3 bg-white/95 backdrop-blur-xs text-kaya-dark font-extrabold text-sm px-3 py-1 rounded-xl shadow">
+                                Ksh ${item.price}
+                            </span>
+                        </div>
+                        <div class="p-5">
+                            <span class="text-[11px] font-semibold uppercase tracking-wider text-kaya-terracotta">${item.category}</span>
+                            <h3 class="font-serif text-lg font-bold text-kaya-dark mt-1 leading-snug">${item.name}</h3>
+                            <p class="text-xs sm:text-sm text-stone-600 mt-2 leading-relaxed">${item.desc}</p>
+                        </div>
+                    </div>
+
+                    <div class="px-5 pb-5 pt-2 flex items-center gap-2">
+                        <button onclick="addToCart('${item.id}')"
+                                class="flex-1 inline-flex items-center justify-center gap-1.5 bg-kaya-dark hover:bg-kaya-wood text-white text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition-colors active:scale-95">
+                            <svg class="w-4 h-4 text-kaya-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            <span>Add to Tray</span>
+                        </button>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${singleWaMsg}" target="_blank" rel="noopener noreferrer"
+                           title="Order just this item on WhatsApp"
+                           class="inline-flex items-center justify-center gap-1.5 bg-kaya-sand hover:bg-kaya-whatsapp hover:text-kaya-dark text-kaya-dark text-xs font-bold py-3 px-3.5 rounded-xl transition-colors">
+                            <span>Order Item</span>
+                        </a>
+                    </div>
+                </article>
+                `;
+            }).join("");
+        }
+
+        function filterMenu(category) {
+            currentCategory = category;
+            document.querySelectorAll(".cat-btn").forEach(btn => {
+                if (btn.dataset.cat === category) {
+                    btn.className = "cat-btn active shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-kaya-dark text-white shadow-sm transition-all";
+                } else {
+                    btn.className = "cat-btn shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-stone-700 hover:bg-kaya-sand border border-stone-200 transition-all";
+                }
+            });
+            renderMenu();
+        }
+
+        function searchMenu(val) {
+            searchQuery = val.trim().toLowerCase();
+            renderMenu();
+        }
+
+        function resetMenuFilters() {
+            document.getElementById("menu-search").value = "";
+            searchQuery = "";
+            filterMenu("All");
+        }
+
+        // Cart Management
+        function addToCart(itemId) {
+            const item = menuItems.find(m => m.id === itemId);
+            if (!item) return;
+
+            const existing = cart.find(c => c.id === itemId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast(`Added ${item.name} to tray`);
+        }
+
+        function updateQty(itemId, delta) {
+            const idx = cart.findIndex(c => c.id === itemId);
+            if (idx === -1) return;
+
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) {
+                cart.splice(idx, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+            const totalPrice = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+            // Navbar badge
+            const navBadge = document.getElementById("nav-cart-badge");
+            if (totalItems > 0) {
+                navBadge.textContent = totalItems;
+                navBadge.classList.remove("hidden");
+            } else {
+                navBadge.classList.add("hidden");
+            }
+
+            // Floating bottom pill
+            const floatBtn = document.getElementById("floating-cart-btn");
+            if (totalItems > 0) {
+                document.getElementById("float-cart-count").textContent = totalItems;
+                document.getElementById("float-cart-total").textContent = `Ksh ${totalPrice.toLocaleString()}`;
+                floatBtn.classList.remove("hidden");
+            } else {
+                floatBtn.classList.add("hidden");
+            }
+
+            // Drawer total & button state
+            document.getElementById("drawer-cart-total").textContent = `Ksh ${totalPrice.toLocaleString()}`;
+            document.getElementById("checkout-wa-btn").disabled = totalItems === 0;
+
+            // Drawer list
+            const container = document.getElementById("cart-items-container");
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16">
+                        <div class="w-14 h-14 rounded-2xl bg-kaya-sand text-stone-400 flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        </div>
+                        <p class="font-serif font-bold text-lg text-kaya-dark">Your order tray is empty</p>
+                        <p class="text-xs text-stone-500 mt-1 max-w-xs mx-auto">Browse our digital menu and tap "Add to Tray" to build your WhatsApp order.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="bg-white p-3.5 rounded-2xl border border-stone-200 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <p class="font-bold text-sm text-kaya-dark truncate">${item.name}</p>
+                        <p class="text-xs text-kaya-terracotta font-semibold mt-0.5">Ksh ${item.price} each</p>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0 bg-kaya-cream px-2 py-1 rounded-xl border border-stone-200">
+                        <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 rounded-lg bg-white text-kaya-dark font-bold text-sm hover:bg-stone-200">−</button>
+                        <span class="text-xs font-bold w-5 text-center">${item.qty}</span>
+                        <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 rounded-lg bg-kaya-dark text-white font-bold text-sm hover:bg-kaya-wood">+</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById("cart-drawer");
+            const backdrop = document.getElementById("cart-backdrop");
+            const isClosed = drawer.classList.contains("translate-x-full");
+
+            if (isClosed) {
+                backdrop.classList.remove("hidden");
+                drawer.classList.remove("translate-x-full");
+            } else {
+                drawer.classList.add("translate-x-full");
+                backdrop.classList.add("hidden");
+            }
+        }
+
+        function checkoutCartWhatsApp() {
+            if (cart.length === 0) return;
+
+            const mode = document.getElementById("order-mode").value;
+            const note = document.getElementById("order-note").value.trim();
+            const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+            let message = `Hello *Kaya Cuisine Restaurant*! I would like to place an order:\n\n`;
+            cart.forEach(item => {
+                message += `• ${item.qty}x ${item.name} — Ksh ${(item.price * item.qty).toLocaleString()}\n`;
+            });
+            message += `\n*Estimated Total:* Ksh ${total.toLocaleString()}`;
+            message += `\n*Order Type:* ${mode}`;
+            if (note) message += `\n*Note:* ${note}`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        // Catering Quote Calculator & WhatsApp Submission
+        function updateCateringEstimate() {
+            const guests = parseInt(document.getElementById("cat-guests").value, 10) || 25;
+            const tierRadio = document.querySelector('input[name="cat-tier"]:checked');
+            const perPlate = tierRadio ? parseInt(tierRadio.value, 10) : 550;
+
+            document.getElementById("guest-count-label").textContent = guests >= 200 ? "200+" : guests;
+            const estimate = guests * perPlate;
+            document.getElementById("cat-estimate-total").textContent = `Ksh ${estimate.toLocaleString()}`;
+        }
+
+        function sendCateringWhatsApp(e) {
+            e.preventDefault();
+            const name = document.getElementById("cat-name").value.trim();
+            const eventType = document.getElementById("cat-type").value;
+            const date = document.getElementById("cat-date").value;
+            const guests = document.getElementById("cat-guests").value;
+            const tierRadio = document.querySelector('input[name="cat-tier"]:checked');
+            const perPlate = tierRadio ? parseInt(tierRadio.value, 10) : 550;
+            const estimate = (parseInt(guests, 10) * perPlate).toLocaleString();
+            const notes = document.getElementById("cat-notes").value.trim();
+
+            let msg = `Hello *Kaya Cuisine Catering*! I'd like to request a catering quote:\n\n`;
+            msg += `*Name:* ${name}\n`;
+            msg += `*Event Type:* ${eventType}\n`;
+            msg += `*Event Date:* ${date}\n`;
+            msg += `*Estimated Guests:* ${guests} pax\n`;
+            msg += `*Selected Tier:* Ksh ${perPlate}/guest (Est. Ksh ${estimate})\n`;
+            if (notes) msg += `*Location / Notes:* ${notes}\n`;
+
+            const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+            window.open(url, "_blank", "noopener,noreferrer");
+        }
+
+        // Toast Helper
+        let toastTimeout;
+        function showToast(text) {
+            const toast = document.getElementById("toast");
+            toast.textContent = text;
+            toast.classList.remove("opacity-0");
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add("opacity-0");
+            }, 2200);
+        }
+    </script>
+</body>
+</html>
